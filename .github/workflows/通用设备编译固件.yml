@@ -19,6 +19,8 @@ on:
           - lede-master
           - immortalwrt-master
           - Lienol-master
+          - immortalwrt-mt798x-6.6
+          - openwrt-redmi-ax3000
       
 env:
   FEEDS_CONF: config/${{ inputs.source_branch }}/feeds.conf.default
@@ -65,7 +67,15 @@ jobs:
         if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
         run: |
           # Set up compilation source code
-          if [[ "${{ inputs.source_branch }}" == *"openwrt"* ]]; then
+          if [[ "${{ inputs.source_branch }}" == "immortalwrt-mt798x-6.6" ]]; then
+              REPO_URL="https://github.com/padavanonly/immortalwrt-mt798x-6.6"
+              REPO_BRANCH="openwrt-24.10-6.6"
+              TAGS_NAME="padavanonly"
+          elif [[ "${{ inputs.source_branch }}" == "openwrt-redmi-ax3000" ]]; then
+              REPO_URL="https://github.com/hzyitc/openwrt-redmi-ax3000"
+              REPO_BRANCH="ipq50xx-qsdk-kernel-5.4-openwrt-21.02-qsdk-11.5.05.841.1029"
+              TAGS_NAME="hzyitc"
+          elif [[ "${{ inputs.source_branch }}" == *"openwrt"* ]]; then
               REPO_URL="https://github.com/openwrt/openwrt"
               REPO_BRANCH="main"
               TAGS_NAME="official"
